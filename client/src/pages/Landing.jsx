@@ -295,6 +295,7 @@ function DashboardMockup() {
 /* ─── Main Landing ─── */
 export default function Landing() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [apptCount, apptRef] = useCounter(1240);
   const [missedCount, missedRef] = useCounter(98);
   const [doctorCount, doctorRef] = useCounter(50);
@@ -327,13 +328,35 @@ export default function Landing() {
         .glow-btn { transition: all 0.25s ease; }
         .nav-link:hover { color: #fff !important; }
         .badge-pulse::before { content: ''; position: absolute; inset: -4px; border-radius: 999px; border: 2px solid #00bfa5; animation: pulse-ring 2s ease-out infinite; }
+
+        /* Mobile nav */
+        .mobile-menu-btn { display: none; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; align-items: center; justify-content: center; }
+        .nav-links-desktop { display: flex; align-items: center; gap: 2rem; }
+        .nav-links-mobile { display: none; }
+
+        @media (max-width: 768px) {
+          .mobile-menu-btn { display: flex; }
+          .nav-links-desktop { display: none; }
+          .nav-links-mobile.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(6,9,18,0.97); padding: 1rem 5%; gap: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); z-index: 200; }
+          .landing-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .landing-features-grid { grid-template-columns: 1fr !important; }
+          .landing-hero-title { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+          .float-anim { animation: none !important; }
+          .landing-mockup { transform: none !important; }
+        }
+
+        @media (max-width: 480px) {
+          .landing-stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem !important; }
+          .landing-stats-grid > div { padding: 1rem 0.5rem !important; }
+          .landing-stats-grid > div > div:first-child { font-size: 2rem !important; }
+        }
       `}</style>
 
       {/* ── Interactive Canvas Background ── */}
       <InteractiveCanvas />
 
       {/* ── Navbar ── */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 5%', background: 'rgba(6,9,18,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <nav style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 5%', background: 'rgba(6,9,18,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)', flexWrap: 'wrap', gap: '0.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <div style={{ width: 36, height: 36, background: 'linear-gradient(135deg,#00bfa5,#0097a7)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', boxShadow: '0 4px 12px rgba(0,191,165,0.4)' }}>🏥</div>
           <div>
@@ -341,14 +364,23 @@ export default function Landing() {
             <div style={{ fontSize: '0.6rem', color: '#00bfa5', fontWeight: 500, lineHeight: 1 }}>Clinic Analyzer</div>
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+        {/* Desktop nav links */}
+        <div className="nav-links-desktop">
           {['Features', 'How it works', 'Testimonials'].map(item => (
             <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} className="nav-link" style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.875rem', fontWeight: 500, textDecoration: 'none', transition: 'color 0.2s' }}>{item}</a>
           ))}
         </div>
-        <div style={{ display: 'flex', gap: '0.6rem' }}>
+        <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
           <Link to="/login" style={{ padding: '0.5rem 1.25rem', borderRadius: '8px', color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.12)', textDecoration: 'none', transition: 'all 0.2s' }}>Sign In</Link>
           <Link to="/register" className="glow-btn" style={{ padding: '0.5rem 1.25rem', borderRadius: '8px', background: 'linear-gradient(135deg,#00bfa5,#0097a7)', color: '#fff', fontSize: '0.875rem', fontWeight: 700, textDecoration: 'none', boxShadow: '0 4px 20px rgba(0,191,165,0.35)' }}>Get Started →</Link>
+          {/* Mobile hamburger */}
+          <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(o => !o)} aria-label="Toggle menu">☰</button>
+        </div>
+        {/* Mobile dropdown links */}
+        <div className={`nav-links-mobile ${mobileMenuOpen ? 'open' : ''}`}>
+          {['Features', 'How it works', 'Testimonials'].map(item => (
+            <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} onClick={() => setMobileMenuOpen(false)} style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500, textDecoration: 'none', padding: '0.6rem 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>{item}</a>
+          ))}
         </div>
       </nav>
 
@@ -404,7 +436,7 @@ export default function Landing() {
 
       {/* ── Stats ── */}
       <section style={{ position: 'relative', zIndex: 1, background: 'rgba(255,255,255,0.025)', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '3.5rem 5%' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '2rem' }}>
+        <div className="landing-stats-grid" style={{ maxWidth: '900px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '2rem' }}>
           {[
             { ref: apptRef, val: apptCount, suffix: '+', label: 'Appointments Managed', color: '#3b82f6' },
             { ref: missedRef, val: missedCount, suffix: '%', label: 'Fewer Missed Follow-ups', color: '#00bfa5' },

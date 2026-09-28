@@ -74,7 +74,7 @@ export default function Dashboard() {
         <StatCard icon="🏥" value={today.length} label="Today's Appointments" sub="Scheduled today" color="#3182ce" bg="#ebf8ff" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+      <div className="dash-two-col">
         {/* Missed Appointments */}
         <div className="card card-p">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>

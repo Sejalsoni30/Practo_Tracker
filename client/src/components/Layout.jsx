@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/index.css';
@@ -31,6 +31,22 @@ export default function Layout({ children, title }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Close sidebar when route changes (mobile nav)
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when sidebar is open on mobile
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [sidebarOpen]);
 
   const handleLogout = () => {
     logout();
@@ -39,11 +55,27 @@ export default function Layout({ children, title }) {
 
   return (
     <div className="layout">
+      {/* Mobile overlay backdrop */}
+      <div
+        className={`sidebar-overlay ${sidebarOpen ? 'open' : ''}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
       {/* Sidebar */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-brand">
-          <div className="brand-name">🏥 Practo Tracker</div>
-          <div className="brand-sub">Clinic Appointment Analyzer</div>
+          <div>
+            <div className="brand-name">🏥 Practo Tracker</div>
+            <div className="brand-sub">Clinic Appointment Analyzer</div>
+          </div>
+          {/* Close button (mobile only) */}
+          <button
+            className="sidebar-close-btn"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
         </div>
 
         <nav className="sidebar-nav">
@@ -77,9 +109,22 @@ export default function Layout({ children, title }) {
       {/* Main */}
       <div className="main-content">
         <header className="topbar">
+          {/* Hamburger (mobile only) */}
+          <button
+            className="hamburger-btn"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open menu"
+            id="hamburger-menu-btn"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+
           <div className="topbar-title">{title}</div>
+
           <div className="topbar-right">
-            <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+            <span className="date-text" style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
               {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </span>
           </div>
@@ -89,3 +134,4 @@ export default function Layout({ children, title }) {
     </div>
   );
 }
+

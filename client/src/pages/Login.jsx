@@ -27,8 +27,19 @@ export default function Login() {
 
   return (
     <div style={styles.page}>
+      <style>{`
+        @media (max-width: 768px) {
+          .login-left { display: none !important; }
+          .login-right { padding: 1.5rem !important; }
+          .login-form { padding: 2rem 1.5rem !important; border-radius: 16px !important; }
+        }
+        @media (max-width: 480px) {
+          .login-right { padding: 1rem !important; background: #f0f4f8 !important; align-items: flex-start !important; padding-top: 2rem !important; }
+          .login-form { border-radius: 14px !important; padding: 1.5rem 1.25rem !important; box-shadow: 0 8px 30px rgba(0,0,0,0.1) !important; }
+        }
+      `}</style>
       {/* Left panel */}
-      <div style={styles.left}>
+      <div style={styles.left} className="login-left">
         <div style={styles.leftInner}>
           <Link to="/" style={styles.backBtn}>← Back to home</Link>
           <div style={styles.brand}>
@@ -53,8 +64,8 @@ export default function Login() {
       </div>
 
       {/* Right panel */}
-      <div style={styles.right}>
-        <div style={styles.form}>
+      <div style={styles.right} className="login-right">
+        <div style={styles.form} className="login-form">
           <div style={{ marginBottom: '2rem' }}>
             <h1 style={styles.title}>Welcome back</h1>
             <p style={styles.sub}>Sign in to your clinic dashboard</p>

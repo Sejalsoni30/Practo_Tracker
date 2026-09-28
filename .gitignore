@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment variables
+.env
+server/.env
+client/.env
+
+# Build outputs
+dist/
+build/
+
+# Logs and system files
+logs
+*.log
+npm-debug.log*
+.DS_Store

@@ -550,40 +550,185 @@ export default function Landing() {
       </section>
 
       {/* ── Final CTA ── */}
-      <section style={{ position: 'relative', zIndex: 1, padding: '7rem 5%', textAlign: 'center', background: 'linear-gradient(135deg, rgba(0,191,165,0.07), rgba(59,130,246,0.05))', borderTop: '1px solid rgba(0,191,165,0.12)' }}>
-        {/* Glow circle */}
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '400px', height: '400px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,191,165,0.12), transparent)', pointerEvents: 'none' }} />
-        <div style={{ position: 'relative' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>🏥</div>
-          <h2 style={{ fontSize: 'clamp(2rem,5vw,3.2rem)', fontWeight: 900, letterSpacing: '-1px', marginBottom: '1rem' }}>
-            Ready to transform<br />
-            <span style={{ background: 'linear-gradient(135deg,#00bfa5,#00e5cc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>your clinic today?</span>
+      <section style={{ position: 'relative', zIndex: 1, overflow: 'hidden', padding: '8rem 5% 7rem', textAlign: 'center' }}>
+        {/* Layered glow backgrounds */}
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(6,9,18,0) 0%, rgba(0,191,165,0.06) 40%, rgba(59,130,246,0.05) 70%, rgba(6,9,18,0) 100%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '-80px', left: '50%', transform: 'translateX(-50%)', width: '700px', height: '700px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,191,165,0.1) 0%, transparent 70%)', pointerEvents: 'none', filter: 'blur(20px)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,191,165,0.4), rgba(59,130,246,0.4), transparent)' }} />
+
+        {/* Floating orbs */}
+        <div style={{ position: 'absolute', top: '20%', left: '8%', width: '120px', height: '120px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,191,165,0.15), transparent)', filter: 'blur(30px)', animation: 'float 8s ease-in-out infinite' }} />
+        <div style={{ position: 'absolute', bottom: '25%', right: '10%', width: '90px', height: '90px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.2), transparent)', filter: 'blur(25px)', animation: 'float 6s ease-in-out infinite reverse' }} />
+
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: '900px', margin: '0 auto' }}>
+
+          {/* Badge */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', background: 'linear-gradient(135deg, rgba(0,191,165,0.12), rgba(0,229,204,0.08))', border: '1px solid rgba(0,191,165,0.3)', borderRadius: '999px', padding: '0.45rem 1.25rem', fontSize: '0.78rem', color: '#00e5cc', fontWeight: 700, marginBottom: '2.5rem', backdropFilter: 'blur(10px)', boxShadow: '0 4px 20px rgba(0,191,165,0.15)' }}>
+            <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#00e5cc', boxShadow: '0 0 10px #00e5cc', animation: 'pulse-ring 2s ease-out infinite' }} />
+            🚀 Trusted by 500+ Clinics Across India
+          </div>
+
+          {/* Headline */}
+          <h2 style={{ fontSize: 'clamp(2.4rem, 6vw, 4rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-2px', marginBottom: '1.5rem' }}>
+            <span style={{ background: 'linear-gradient(135deg, #ffffff, rgba(255,255,255,0.8))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Ready to transform</span>
+            <br />
+            <span style={{ background: 'linear-gradient(135deg, #00bfa5 0%, #00e5cc 50%, #0097a7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '200%', animation: 'shimmer 3s linear infinite', display: 'inline-block' }}>
+              your clinic today?
+            </span>
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '1.05rem', marginBottom: '2.5rem', maxWidth: '480px', margin: '0 auto 2.5rem', lineHeight: 1.7 }}>
-            Join hundreds of clinics already using Practo Tracker to deliver better patient care.
+
+          {/* Subtext */}
+          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.1rem', lineHeight: 1.75, maxWidth: '560px', margin: '0 auto 1rem' }}>
+            Stop chasing missed appointments. Start delivering smarter patient care — automated, prioritized, and beautifully organized.
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-            <Link to="/register" className="glow-btn" style={{ padding: '1rem 2.5rem', borderRadius: '14px', background: 'linear-gradient(135deg,#00bfa5,#0097a7)', color: '#fff', fontWeight: 800, fontSize: '1.05rem', textDecoration: 'none', boxShadow: '0 12px 40px rgba(0,191,165,0.45)', letterSpacing: '-0.3px' }}>
-              Create Free Account →
+
+          {/* Mini stats row */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '2.5rem', margin: '2.5rem 0', flexWrap: 'wrap' }}>
+            {[
+              { val: '1,240+', label: 'Appointments managed', color: '#3b82f6' },
+              { val: '98%', label: 'Fewer missed follow-ups', color: '#00bfa5' },
+              { val: '50+', label: 'Doctors supported', color: '#8b5cf6' },
+            ].map(s => (
+              <div key={s.label} style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '1.8rem', fontWeight: 900, color: s.color, letterSpacing: '-1px', lineHeight: 1 }}>{s.val}</div>
+                <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.38)', marginTop: '0.3rem', fontWeight: 500 }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA buttons */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+            <Link to="/register" className="glow-btn" style={{ padding: '1.1rem 2.75rem', borderRadius: '16px', background: 'linear-gradient(135deg, #00bfa5, #0097a7)', color: '#fff', fontWeight: 800, fontSize: '1.05rem', textDecoration: 'none', boxShadow: '0 12px 40px rgba(0,191,165,0.5)', letterSpacing: '-0.3px', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.25s ease' }}>
+              🚀 Start Free — No Card Needed
             </Link>
-            <Link to="/login" style={{ padding: '1rem 2.5rem', borderRadius: '14px', background: 'rgba(255,255,255,0.06)', color: '#fff', fontWeight: 600, fontSize: '1.05rem', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.1)' }}>
-              Sign In Instead
+            <Link to="/login" style={{ padding: '1.1rem 2.75rem', borderRadius: '16px', background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.85)', fontWeight: 600, fontSize: '1.05rem', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)', transition: 'all 0.25s ease' }}>
+              Sign In to Dashboard →
             </Link>
+          </div>
+
+          {/* Trust badges */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+            {['🔒 HTTPS Secured', '✅ No credit card', '⚡ 2-min setup', '🆓 Free forever plan'].map(b => (
+              <div key={b} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)', fontWeight: 500 }}>{b}</div>
+            ))}
+          </div>
+
+          {/* Social proof avatars */}
+          <div style={{ marginTop: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+            <div style={{ display: 'flex' }}>
+              {['👩‍⚕️', '👨‍⚕️', '👩‍💼', '🧑‍⚕️', '👩‍💻'].map((av, i) => (
+                <div key={i} style={{ width: 38, height: 38, borderRadius: '50%', background: `hsl(${i * 60 + 170}, 60%, 30%)`, border: '2px solid rgba(0,191,165,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', marginLeft: i > 0 ? '-10px' : 0, boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}>{av}</div>
+              ))}
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#fff' }}>Join 500+ healthcare professionals</div>
+              <div style={{ display: 'flex', gap: '2px', marginTop: '2px' }}>
+                {[1,2,3,4,5].map(s => <span key={s} style={{ color: '#fbbf24', fontSize: '0.8rem' }}>★</span>)}
+                <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.38)', marginLeft: '4px' }}>4.9/5 rating</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ position: 'relative', zIndex: 1, borderTop: '1px solid rgba(255,255,255,0.06)', padding: '2rem 5%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <div style={{ width: 28, height: 28, background: 'linear-gradient(135deg,#00bfa5,#0097a7)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem' }}>🏥</div>
-          <span style={{ fontWeight: 700, fontSize: '0.875rem', color: 'rgba(255,255,255,0.7)' }}>Practo Tracker</span>
+      <footer style={{ position: 'relative', zIndex: 1, background: 'rgba(4,7,15,0.95)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        {/* Top footer */}
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 5% 3rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2.5rem' }}>
+          {/* Brand */}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem' }}>
+              <div style={{ width: 36, height: 36, background: 'linear-gradient(135deg,#00bfa5,#0097a7)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', boxShadow: '0 4px 12px rgba(0,191,165,0.3)' }}>🏥</div>
+              <div>
+                <div style={{ fontWeight: 800, fontSize: '1rem', color: '#fff' }}>Practo Tracker</div>
+                <div style={{ fontSize: '0.6rem', color: '#00bfa5', fontWeight: 500 }}>Clinic Analyzer</div>
+              </div>
+            </div>
+            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.7, maxWidth: '220px' }}>
+              Smart clinic management — appointments, follow-ups, complaints and analytics all in one place.
+            </p>
+            <div style={{ display: 'flex', gap: '0.6rem', marginTop: '1.25rem' }}>
+              {['🔗', '🐦', '📧'].map((icon, i) => (
+                <div key={i} style={{ width: 34, height: 34, borderRadius: '8px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', cursor: 'pointer' }}>{icon}</div>
+              ))}
+            </div>
+          </div>
+
+          {/* Product links */}
+          <div>
+            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '1px', marginBottom: '1.25rem', textTransform: 'uppercase' }}>Product</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.7rem' }}>
+              {[
+                { label: 'Dashboard', to: '/dashboard' },
+                { label: 'Appointments', to: '/book-appointment' },
+                { label: 'Follow-up Tracker', to: '/follow-ups' },
+                { label: 'Analytics', to: '/analytics' },
+                { label: 'Doctor Directory', to: '/doctors' },
+              ].map(l => (
+                <Link key={l.label} to={l.to} style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.45)', textDecoration: 'none', transition: 'color 0.2s' }}
+                  onMouseEnter={e => e.target.style.color = '#00bfa5'}
+                  onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.45)'}
+                >{l.label}</Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Support links */}
+          <div>
+            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '1px', marginBottom: '1.25rem', textTransform: 'uppercase' }}>Support</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.7rem' }}>
+              {[
+                { label: 'Contact Us', to: '/contact' },
+                { label: 'Privacy Policy', to: '/privacy' },
+                { label: 'Terms of Service', to: '/terms' },
+                { label: 'Complaints', to: '/complaints' },
+                { label: 'Service Tickets', to: '/tickets' },
+              ].map(l => (
+                <Link key={l.label} to={l.to} style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.45)', textDecoration: 'none', transition: 'color 0.2s' }}
+                  onMouseEnter={e => e.target.style.color = '#00bfa5'}
+                  onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.45)'}
+                >{l.label}</Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Newsletter / CTA mini */}
+          <div>
+            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '1px', marginBottom: '1.25rem', textTransform: 'uppercase' }}>Stay Updated</div>
+            <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.38)', lineHeight: 1.6, marginBottom: '1rem' }}>Get product updates and clinic tips delivered to you.</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+              <input
+                placeholder="your@clinic.com"
+                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', padding: '0.65rem 0.9rem', fontSize: '0.82rem', color: '#fff', outline: 'none', fontFamily: 'inherit' }}
+              />
+              <button style={{ background: 'linear-gradient(135deg, #00bfa5, #0097a7)', color: '#fff', border: 'none', borderRadius: '10px', padding: '0.65rem', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(0,191,165,0.3)' }}>
+                Subscribe →
+              </button>
+            </div>
+          </div>
         </div>
-        <div style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.25)' }}>© 2026 Practo Tracker. Clinic Appointment Follow-up Analyzer.</div>
-        <div style={{ display: 'flex', gap: '1.5rem' }}>
-          <Link to="/privacy" style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>Privacy</Link>
-          <Link to="/terms" style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>Terms</Link>
-          <Link to="/contact" style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.3)', textDecoration: 'none' }}>Contact</Link>
+
+        {/* Bottom footer bar */}
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '1.25rem 5%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem', maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.22)' }}>
+            © 2026 Practo Tracker. Built with ❤️ for healthcare teams across India.
+          </div>
+          <div style={{ display: 'flex', gap: '1.5rem' }}>
+            {[
+              { label: 'Privacy', to: '/privacy' },
+              { label: 'Terms', to: '/terms' },
+              { label: 'Contact', to: '/contact' },
+            ].map(l => (
+              <Link key={l.label} to={l.to} style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.28)', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.target.style.color = '#00bfa5'}
+                onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.28)'}
+              >{l.label}</Link>
+            ))}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.72rem', color: 'rgba(255,255,255,0.2)' }}>
+            <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#00bfa5', boxShadow: '0 0 6px #00bfa5' }} />
+            All systems operational
+          </div>
         </div>
       </footer>
     </div>

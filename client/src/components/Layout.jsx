@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import '../styles/index.css';
 
 const navItems = [
@@ -31,6 +32,7 @@ export default function Layout({ children, title }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
+  const { theme, toggleTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Close sidebar when route changes (mobile nav)
@@ -127,6 +129,17 @@ export default function Layout({ children, title }) {
             <span className="date-text" style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
               {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </span>
+            <button
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              id="theme-toggle-btn"
+            >
+              <span className="toggle-icon" style={{ transform: theme === 'dark' ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                {theme === 'light' ? '🌙' : '☀️'}
+              </span>
+            </button>
           </div>
         </header>
         <div className="page-body">{children}</div>

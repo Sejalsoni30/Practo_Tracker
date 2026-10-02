@@ -67,7 +67,10 @@ export default function Layout({ children, title }) {
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-brand">
           <div>
-            <div className="brand-name">🏥 Practo Tracker</div>
+            <div className="brand-name" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <img src="/favicon.png" alt="Practo Tracker Logo" style={{ width: 28, height: 28, borderRadius: '7px', objectFit: 'cover', boxShadow: '0 2px 8px rgba(0,191,165,0.35)' }} />
+              Practo Tracker
+            </div>
             <div className="brand-sub">Clinic Appointment Analyzer</div>
           </div>
           {/* Close button (mobile only) */}

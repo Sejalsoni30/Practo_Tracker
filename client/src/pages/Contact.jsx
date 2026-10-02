@@ -113,7 +113,7 @@ export default function Contact() {
       {/* Navbar */}
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 5%', background: 'rgba(6,9,18,0.92)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none' }}>
-          <div style={{ width: 36, height: 36, background: 'linear-gradient(135deg,#00bfa5,#0097a7)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', boxShadow: '0 4px 12px rgba(0,191,165,0.35)' }}>🏥</div>
+          <img src="/favicon.png" alt="Practo Tracker Logo" style={{ width: 36, height: 36, borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,191,165,0.35)', objectFit: 'cover' }} />
           <div>
             <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#fff', letterSpacing: '-0.3px' }}>Practo Tracker</div>
             <div style={{ fontSize: '0.58rem', color: '#00bfa5', fontWeight: 600 }}>Clinic Analyzer</div>

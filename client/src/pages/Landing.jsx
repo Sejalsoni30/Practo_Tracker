@@ -415,11 +415,11 @@ export default function Landing() {
           ✨ Clinic Appointment & Follow-up Analyzer — Now Live
         </div>
 
-        <h1 className="hero-title" style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-2px', marginBottom: '1.75rem' }}>
-          <span style={{ background: isLight ? 'linear-gradient(135deg, #ffffff 40%, rgba(255,255,255,0.85))' : 'linear-gradient(135deg, #ffffff 40%, rgba(255,255,255,0.6))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+        <h1 className="hero-title" style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-2px', marginBottom: '1.75rem', color: '#fff' }}>
+          <span style={{ opacity: isLight ? 1 : 0.92 }}>
             The Smarter Way<br />to Run Your
           </span>{' '}
-          <span style={{ background: 'linear-gradient(135deg, #b2dfdb, #e0f7fa, #80cbc4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '200%', animation: 'shimmer 3s linear infinite', display: 'inline-block' }}>
+          <span style={{ background: isLight ? 'linear-gradient(135deg, #b2ffed, #e0f7fa, #ccf5f0)' : 'linear-gradient(135deg, #00bfa5, #00e5cc, #0097a7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', backgroundSize: '200%', animation: 'shimmer 3s linear infinite', display: 'inline-block' }}>
             Clinic.
           </span>
         </h1>
@@ -593,10 +593,10 @@ export default function Landing() {
           </div>
 
           {/* Headline */}
-          <h2 style={{ fontSize: 'clamp(2.4rem, 6vw, 4rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-2px', marginBottom: '1.5rem' }}>
-            <span style={{ background: 'linear-gradient(135deg, #ffffff, rgba(255,255,255,0.85))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Ready to transform</span>
+          <h2 style={{ fontSize: 'clamp(2.4rem, 6vw, 4rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-2px', marginBottom: '1.5rem', color: '#fff' }}>
+            <span style={{ opacity: 0.92 }}>Ready to transform</span>
             <br />
-            <span style={{ background: isLight ? 'linear-gradient(135deg, #b2ffed 0%, #e0f7fa 50%, #ccf5f0 100%)' : 'linear-gradient(135deg, #00bfa5 0%, #00e5cc 50%, #0097a7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '200%', animation: 'shimmer 3s linear infinite', display: 'inline-block' }}>
+            <span style={{ background: isLight ? 'linear-gradient(135deg, #b2ffed 0%, #e0f7fa 50%, #ccf5f0 100%)' : 'linear-gradient(135deg, #00bfa5 0%, #00e5cc 50%, #0097a7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', backgroundSize: '200%', animation: 'shimmer 3s linear infinite', display: 'inline-block' }}>
               your clinic today?
             </span>
           </h2>

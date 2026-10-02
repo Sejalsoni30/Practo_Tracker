@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 /* ─── Interactive Canvas Background ─── */
 function InteractiveCanvas() {
@@ -294,6 +295,8 @@ function DashboardMockup() {
 
 /* ─── Main Landing ─── */
 export default function Landing() {
+  const { theme, toggleTheme } = useTheme();
+  const isLight = theme === 'light';
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [apptCount, apptRef] = useCounter(1240);
@@ -307,13 +310,13 @@ export default function Landing() {
   }, []);
 
   return (
-    <div style={{ fontFamily: "'Inter', sans-serif", background: '#060912', color: '#fff', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div style={{ fontFamily: "'Inter', sans-serif", background: isLight ? '#f0f4f8' : '#060912', color: isLight ? '#1a202c' : '#fff', minHeight: '100vh', overflowX: 'hidden', transition: 'background 0.3s ease, color 0.3s ease' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #060912; }
+        ::-webkit-scrollbar-track { background: ${isLight ? '#f0f4f8' : '#060912'}; }
         ::-webkit-scrollbar-thumb { background: #00bfa5; border-radius: 3px; }
         @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
         @keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.7; } 100% { transform: scale(1.4); opacity: 0; } }
@@ -326,18 +329,20 @@ export default function Landing() {
         .float-anim { animation: float 6s ease-in-out infinite; }
         .glow-btn:hover { box-shadow: 0 0 30px rgba(0,191,165,0.5), 0 8px 32px rgba(0,191,165,0.35) !important; transform: translateY(-2px); }
         .glow-btn { transition: all 0.25s ease; }
-        .nav-link:hover { color: #fff !important; }
+        .nav-link:hover { color: ${isLight ? '#00bfa5' : '#fff'} !important; }
         .badge-pulse::before { content: ''; position: absolute; inset: -4px; border-radius: 999px; border: 2px solid #00bfa5; animation: pulse-ring 2s ease-out infinite; }
+        .landing-theme-btn { background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)'}; border: 1px solid ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.15)'}; border-radius: 8px; color: ${isLight ? '#1a202c' : '#fff'}; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; flex-shrink: 0; }
+        .landing-theme-btn:hover { background: rgba(0,191,165,0.15); border-color: rgba(0,191,165,0.4); transform: rotate(15deg) scale(1.08); }
 
         /* Mobile nav */
-        .mobile-menu-btn { display: none; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; align-items: center; justify-content: center; }
+        .mobile-menu-btn { display: none; background: ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)'}; border: 1px solid ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.15)'}; border-radius: 8px; color: ${isLight ? '#1a202c' : '#fff'}; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; align-items: center; justify-content: center; }
         .nav-links-desktop { display: flex; align-items: center; gap: 2rem; }
         .nav-links-mobile { display: none; }
 
         @media (max-width: 768px) {
           .mobile-menu-btn { display: flex; }
           .nav-links-desktop { display: none; }
-          .nav-links-mobile.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(6,9,18,0.97); padding: 1rem 5%; gap: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); z-index: 200; }
+          .nav-links-mobile.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: ${isLight ? 'rgba(240,244,248,0.98)' : 'rgba(6,9,18,0.97)'}; padding: 1rem 5%; gap: 0.5rem; border-bottom: 1px solid ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)'}; z-index: 200; }
           .landing-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .landing-features-grid { grid-template-columns: 1fr !important; }
           .landing-hero-title { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
@@ -356,22 +361,32 @@ export default function Landing() {
       <InteractiveCanvas />
 
       {/* ── Navbar ── */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 5%', background: 'rgba(6,9,18,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)', flexWrap: 'wrap', gap: '0.5rem' }}>
+      <nav style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 5%', background: isLight ? 'rgba(240,244,248,0.92)' : 'rgba(6,9,18,0.85)', backdropFilter: 'blur(20px)', borderBottom: `1px solid ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.06)'}`, flexWrap: 'wrap', gap: '0.5rem', transition: 'background 0.3s ease' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <div style={{ width: 36, height: 36, background: 'linear-gradient(135deg,#00bfa5,#0097a7)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', boxShadow: '0 4px 12px rgba(0,191,165,0.4)' }}>🏥</div>
           <div>
-            <div style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.3px', color: '#fff' }}>Practo Tracker</div>
+            <div style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.3px', color: isLight ? '#1a202c' : '#fff' }}>Practo Tracker</div>
             <div style={{ fontSize: '0.6rem', color: '#00bfa5', fontWeight: 500, lineHeight: 1 }}>Clinic Analyzer</div>
           </div>
         </div>
         {/* Desktop nav links */}
         <div className="nav-links-desktop">
           {['Features', 'How it works', 'Testimonials'].map(item => (
-            <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} className="nav-link" style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.875rem', fontWeight: 500, textDecoration: 'none', transition: 'color 0.2s' }}>{item}</a>
+            <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} className="nav-link" style={{ color: isLight ? 'rgba(26,32,44,0.6)' : 'rgba(255,255,255,0.5)', fontSize: '0.875rem', fontWeight: 500, textDecoration: 'none', transition: 'color 0.2s' }}>{item}</a>
           ))}
         </div>
         <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
-          <Link to="/login" style={{ padding: '0.5rem 1.25rem', borderRadius: '8px', color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', fontWeight: 600, border: '1px solid rgba(255,255,255,0.12)', textDecoration: 'none', transition: 'all 0.2s' }}>Sign In</Link>
+          {/* Theme toggle */}
+          <button
+            className="landing-theme-btn"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${isLight ? 'dark' : 'light'} mode`}
+            title={`Switch to ${isLight ? 'dark' : 'light'} mode`}
+            id="landing-theme-toggle-btn"
+          >
+            {isLight ? '🌙' : '☀️'}
+          </button>
+          <Link to="/login" style={{ padding: '0.5rem 1.25rem', borderRadius: '8px', color: isLight ? '#1a202c' : 'rgba(255,255,255,0.75)', fontSize: '0.875rem', fontWeight: 600, border: `1px solid ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'}`, textDecoration: 'none', transition: 'all 0.2s' }}>Sign In</Link>
           <Link to="/register" className="glow-btn" style={{ padding: '0.5rem 1.25rem', borderRadius: '8px', background: 'linear-gradient(135deg,#00bfa5,#0097a7)', color: '#fff', fontSize: '0.875rem', fontWeight: 700, textDecoration: 'none', boxShadow: '0 4px 20px rgba(0,191,165,0.35)' }}>Get Started →</Link>
           {/* Mobile hamburger */}
           <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(o => !o)} aria-label="Toggle menu">☰</button>
@@ -379,8 +394,14 @@ export default function Landing() {
         {/* Mobile dropdown links */}
         <div className={`nav-links-mobile ${mobileMenuOpen ? 'open' : ''}`}>
           {['Features', 'How it works', 'Testimonials'].map(item => (
-            <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} onClick={() => setMobileMenuOpen(false)} style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500, textDecoration: 'none', padding: '0.6rem 0', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>{item}</a>
+            <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} onClick={() => setMobileMenuOpen(false)} style={{ color: isLight ? 'rgba(26,32,44,0.8)' : 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500, textDecoration: 'none', padding: '0.6rem 0', borderBottom: `1px solid ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'}` }}>{item}</a>
           ))}
+          <button
+            onClick={() => { toggleTheme(); setMobileMenuOpen(false); }}
+            style={{ color: isLight ? '#1a202c' : 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500, textDecoration: 'none', padding: '0.6rem 0', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          >
+            {isLight ? '🌙' : '☀️'} {isLight ? 'Dark Mode' : 'Light Mode'}
+          </button>
         </div>
       </nav>
 

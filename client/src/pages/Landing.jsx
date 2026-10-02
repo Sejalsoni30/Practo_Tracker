@@ -202,27 +202,29 @@ function Blob({ style }) {
 }
 
 /* ─── Feature card ─── */
-function FeatureCard({ icon, title, desc, color, index }) {
+function FeatureCard({ icon, title, desc, color, index, isLight }) {
   const [hov, setHov] = useState(false);
   return (
     <div
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background: hov ? `rgba(${hexToRgb(color)},0.08)` : 'rgba(255,255,255,0.03)',
-        border: `1px solid ${hov ? color + '55' : 'rgba(255,255,255,0.07)'}`,
+        background: isLight
+          ? hov ? `rgba(${hexToRgb(color)},0.1)` : '#ffffff'
+          : hov ? `rgba(${hexToRgb(color)},0.08)` : 'rgba(255,255,255,0.03)',
+        border: `1px solid ${hov ? color + '55' : isLight ? 'rgba(0,105,92,0.12)' : 'rgba(255,255,255,0.07)'}`,
         borderRadius: '18px', padding: '1.75rem',
         transition: 'all 0.25s ease',
         transform: hov ? 'translateY(-4px)' : 'none',
-        boxShadow: hov ? `0 20px 40px rgba(${hexToRgb(color)},0.15)` : 'none',
+        boxShadow: hov ? `0 20px 40px rgba(${hexToRgb(color)},0.15)` : isLight ? '0 2px 12px rgba(0,105,92,0.06)' : 'none',
         animationDelay: `${index * 80}ms`,
       }}
     >
       <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: `rgba(${hexToRgb(color)},0.15)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', marginBottom: '1rem', border: `1px solid rgba(${hexToRgb(color)},0.25)` }}>
         {icon}
       </div>
-      <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem' }}>{title}</h3>
-      <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.48)', lineHeight: 1.65 }}>{desc}</p>
+      <h3 style={{ fontSize: '1rem', fontWeight: 700, color: isLight ? '#0d2d26' : '#fff', marginBottom: '0.5rem' }}>{title}</h3>
+      <p style={{ fontSize: '0.85rem', color: isLight ? '#3d6b62' : 'rgba(255,255,255,0.48)', lineHeight: 1.65 }}>{desc}</p>
     </div>
   );
 }
@@ -310,13 +312,13 @@ export default function Landing() {
   }, []);
 
   return (
-    <div style={{ fontFamily: "'Inter', sans-serif", background: isLight ? '#f0f4f8' : '#060912', color: isLight ? '#1a202c' : '#fff', minHeight: '100vh', overflowX: 'hidden', transition: 'background 0.3s ease, color 0.3s ease' }}>
+    <div style={{ fontFamily: "'Inter', sans-serif", background: isLight ? '#e8f5f3' : '#060912', color: isLight ? '#0d2d26' : '#fff', minHeight: '100vh', overflowX: 'hidden', transition: 'background 0.3s ease, color 0.3s ease' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: ${isLight ? '#f0f4f8' : '#060912'}; }
+        ::-webkit-scrollbar-track { background: ${isLight ? '#e8f5f3' : '#060912'}; }
         ::-webkit-scrollbar-thumb { background: #00bfa5; border-radius: 3px; }
         @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
         @keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.7; } 100% { transform: scale(1.4); opacity: 0; } }
@@ -361,18 +363,18 @@ export default function Landing() {
       <InteractiveCanvas />
 
       {/* ── Navbar ── */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 5%', background: isLight ? 'rgba(240,244,248,0.92)' : 'rgba(6,9,18,0.85)', backdropFilter: 'blur(20px)', borderBottom: `1px solid ${isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.06)'}`, flexWrap: 'wrap', gap: '0.5rem', transition: 'background 0.3s ease' }}>
+      <nav style={{ position: 'sticky', top: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 5%', background: isLight ? 'rgba(0,105,92,0.95)' : 'rgba(6,9,18,0.85)', backdropFilter: 'blur(20px)', borderBottom: `1px solid ${isLight ? 'rgba(0,191,165,0.3)' : 'rgba(255,255,255,0.06)'}`, flexWrap: 'wrap', gap: '0.5rem', transition: 'background 0.3s ease' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <div style={{ width: 36, height: 36, background: 'linear-gradient(135deg,#00bfa5,#0097a7)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', boxShadow: '0 4px 12px rgba(0,191,165,0.4)' }}>🏥</div>
           <div>
-            <div style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.3px', color: isLight ? '#1a202c' : '#fff' }}>Practo Tracker</div>
+            <div style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.3px', color: '#fff' }}>Practo Tracker</div>
             <div style={{ fontSize: '0.6rem', color: '#00bfa5', fontWeight: 500, lineHeight: 1 }}>Clinic Analyzer</div>
           </div>
         </div>
         {/* Desktop nav links */}
         <div className="nav-links-desktop">
           {['Features', 'How it works', 'Testimonials'].map(item => (
-            <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} className="nav-link" style={{ color: isLight ? 'rgba(26,32,44,0.6)' : 'rgba(255,255,255,0.5)', fontSize: '0.875rem', fontWeight: 500, textDecoration: 'none', transition: 'color 0.2s' }}>{item}</a>
+            <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} className="nav-link" style={{ color: isLight ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.5)', fontSize: '0.875rem', fontWeight: 500, textDecoration: 'none', transition: 'color 0.2s' }}>{item}</a>
           ))}
         </div>
         <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
@@ -386,7 +388,7 @@ export default function Landing() {
           >
             {isLight ? '🌙' : '☀️'}
           </button>
-          <Link to="/login" style={{ padding: '0.5rem 1.25rem', borderRadius: '8px', color: isLight ? '#1a202c' : 'rgba(255,255,255,0.75)', fontSize: '0.875rem', fontWeight: 600, border: `1px solid ${isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'}`, textDecoration: 'none', transition: 'all 0.2s' }}>Sign In</Link>
+          <Link to="/login" style={{ padding: '0.5rem 1.25rem', borderRadius: '8px', color: isLight ? '#fff' : 'rgba(255,255,255,0.75)', fontSize: '0.875rem', fontWeight: 600, border: `1px solid ${isLight ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.12)'}`, textDecoration: 'none', transition: 'all 0.2s' }}>Sign In</Link>
           <Link to="/register" className="glow-btn" style={{ padding: '0.5rem 1.25rem', borderRadius: '8px', background: 'linear-gradient(135deg,#00bfa5,#0097a7)', color: '#fff', fontSize: '0.875rem', fontWeight: 700, textDecoration: 'none', boxShadow: '0 4px 20px rgba(0,191,165,0.35)' }}>Get Started →</Link>
           {/* Mobile hamburger */}
           <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(o => !o)} aria-label="Toggle menu">☰</button>
@@ -394,11 +396,11 @@ export default function Landing() {
         {/* Mobile dropdown links */}
         <div className={`nav-links-mobile ${mobileMenuOpen ? 'open' : ''}`}>
           {['Features', 'How it works', 'Testimonials'].map(item => (
-            <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} onClick={() => setMobileMenuOpen(false)} style={{ color: isLight ? 'rgba(26,32,44,0.8)' : 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500, textDecoration: 'none', padding: '0.6rem 0', borderBottom: `1px solid ${isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'}` }}>{item}</a>
+            <a key={item} href={`#${item.toLowerCase().replace(/ /g, '-')}`} onClick={() => setMobileMenuOpen(false)} style={{ color: isLight ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500, textDecoration: 'none', padding: '0.6rem 0', borderBottom: `1px solid ${isLight ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.06)'}` }}>{item}</a>
           ))}
           <button
             onClick={() => { toggleTheme(); setMobileMenuOpen(false); }}
-            style={{ color: isLight ? '#1a202c' : 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500, textDecoration: 'none', padding: '0.6rem 0', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+            style={{ color: isLight ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500, textDecoration: 'none', padding: '0.6rem 0', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
           >
             {isLight ? '🌙' : '☀️'} {isLight ? 'Dark Mode' : 'Light Mode'}
           </button>
@@ -406,6 +408,7 @@ export default function Landing() {
       </nav>
 
       {/* ── Hero ── */}
+      {isLight && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '700px', background: 'linear-gradient(160deg, #00695c 0%, #00897b 30%, #26a69a 60%, #4db6ac 85%, #e8f5f3 100%)', zIndex: 0, pointerEvents: 'none' }} />}
       <section style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '3rem 5% 5rem', maxWidth: '900px', margin: '0 auto' }}>
         <div className="hero-title" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0,191,165,0.1)', border: '1px solid rgba(0,191,165,0.25)', borderRadius: '999px', padding: '0.4rem 1.1rem', fontSize: '0.78rem', color: '#00bfa5', fontWeight: 600, marginBottom: '2rem', position: 'relative' }}>
           <span className="badge-pulse" style={{ position: 'relative', display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#00bfa5' }} />
@@ -413,31 +416,31 @@ export default function Landing() {
         </div>
 
         <h1 className="hero-title" style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-2px', marginBottom: '1.75rem' }}>
-          <span style={{ background: 'linear-gradient(135deg, #ffffff 40%, rgba(255,255,255,0.6))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          <span style={{ background: isLight ? 'linear-gradient(135deg, #ffffff 40%, rgba(255,255,255,0.85))' : 'linear-gradient(135deg, #ffffff 40%, rgba(255,255,255,0.6))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             The Smarter Way<br />to Run Your
           </span>{' '}
-          <span style={{ background: 'linear-gradient(135deg, #00bfa5, #00e5cc, #0097a7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '200%', animation: 'shimmer 3s linear infinite', display: 'inline-block' }}>
+          <span style={{ background: 'linear-gradient(135deg, #b2dfdb, #e0f7fa, #80cbc4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '200%', animation: 'shimmer 3s linear infinite', display: 'inline-block' }}>
             Clinic.
           </span>
         </h1>
 
-        <p className="hero-sub" style={{ fontSize: '1.15rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.75, maxWidth: '620px', margin: '0 auto 2.5rem' }}>
+        <p className="hero-sub" style={{ fontSize: '1.15rem', color: isLight ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.5)', lineHeight: 1.75, maxWidth: '620px', margin: '0 auto 2.5rem' }}>
           Find missed appointments, prioritize urgent follow-ups, manage complaints & tickets — all automated with{' '}
-          <span style={{ color: '#00bfa5', fontWeight: 600 }}>smart priority scoring</span> and{' '}
-          <span style={{ color: '#00bfa5', fontWeight: 600 }}>next-action suggestions</span>.
+          <span style={{ color: isLight ? '#b2ffed' : '#00bfa5', fontWeight: 600 }}>smart priority scoring</span> and{' '}
+          <span style={{ color: isLight ? '#b2ffed' : '#00bfa5', fontWeight: 600 }}>next-action suggestions</span>.
         </p>
 
         <div className="hero-cta" style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '4rem' }}>
           <Link to="/register" className="glow-btn" style={{ padding: '0.9rem 2.25rem', borderRadius: '12px', background: 'linear-gradient(135deg,#00bfa5,#0097a7)', color: '#fff', fontWeight: 700, fontSize: '1rem', textDecoration: 'none', boxShadow: '0 8px 32px rgba(0,191,165,0.4)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             Start Free Today <span style={{ fontSize: '1.1rem' }}>→</span>
           </Link>
-          <Link to="/login" style={{ padding: '0.9rem 2.25rem', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', color: '#fff', fontWeight: 600, fontSize: '1rem', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s' }}>
+          <Link to="/login" style={{ padding: '0.9rem 2.25rem', borderRadius: '12px', background: isLight ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.05)', color: '#fff', fontWeight: 600, fontSize: '1rem', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s', backdropFilter: 'blur(8px)' }}>
             View Dashboard 📊
           </Link>
         </div>
 
         {/* Trust line */}
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', fontSize: '0.78rem', color: isLight ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.35)', flexWrap: 'wrap' }}>
           {['✅ No credit card required', '✅ Set up in 2 minutes', '✅ Free forever plan'].map(t => (
             <span key={t}>{t}</span>
           ))}
@@ -456,52 +459,52 @@ export default function Landing() {
       </section>
 
       {/* ── Stats ── */}
-      <section style={{ position: 'relative', zIndex: 1, background: 'rgba(255,255,255,0.025)', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '3.5rem 5%' }}>
+      <section style={{ position: 'relative', zIndex: 1, background: isLight ? 'linear-gradient(135deg, #00695c, #00897b)' : 'rgba(255,255,255,0.025)', borderTop: isLight ? 'none' : '1px solid rgba(255,255,255,0.06)', borderBottom: isLight ? 'none' : '1px solid rgba(255,255,255,0.06)', padding: '3.5rem 5%', boxShadow: isLight ? '0 4px 32px rgba(0,105,92,0.2)' : 'none' }}>
         <div className="landing-stats-grid" style={{ maxWidth: '900px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '2rem' }}>
           {[
-            { ref: apptRef, val: apptCount, suffix: '+', label: 'Appointments Managed', color: '#3b82f6' },
-            { ref: missedRef, val: missedCount, suffix: '%', label: 'Fewer Missed Follow-ups', color: '#00bfa5' },
-            { ref: doctorRef, val: doctorCount, suffix: '+', label: 'Doctors Supported', color: '#8b5cf6' },
-            { ref: ticketRef, val: ticketCount, suffix: '+', label: 'Tickets Resolved', color: '#f59e0b' },
+            { ref: apptRef, val: apptCount, suffix: '+', label: 'Appointments Managed', color: isLight ? '#b2ffed' : '#3b82f6' },
+            { ref: missedRef, val: missedCount, suffix: '%', label: 'Fewer Missed Follow-ups', color: isLight ? '#e0f7fa' : '#00bfa5' },
+            { ref: doctorRef, val: doctorCount, suffix: '+', label: 'Doctors Supported', color: isLight ? '#ccf5f0' : '#8b5cf6' },
+            { ref: ticketRef, val: ticketCount, suffix: '+', label: 'Tickets Resolved', color: isLight ? '#fff9c4' : '#f59e0b' },
           ].map(s => (
             <div key={s.label} ref={s.ref} style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '2.8rem', fontWeight: 900, color: s.color, letterSpacing: '-1px' }}>{s.val}{s.suffix}</div>
-              <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.4rem', lineHeight: 1.4 }}>{s.label}</div>
+              <div style={{ fontSize: '0.82rem', color: isLight ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.4)', marginTop: '0.4rem', lineHeight: 1.4 }}>{s.label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── Features ── */}
-      <section id="features" style={{ position: 'relative', zIndex: 1, padding: '7rem 5%', maxWidth: '1200px', margin: '0 auto' }}>
+      <section id="features" style={{ position: 'relative', zIndex: 1, padding: '7rem 5%', maxWidth: '1200px', margin: '0 auto', background: isLight ? 'transparent' : 'transparent' }}>
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <div style={{ display: 'inline-block', background: 'rgba(0,191,165,0.1)', border: '1px solid rgba(0,191,165,0.2)', borderRadius: '999px', padding: '0.35rem 1rem', fontSize: '0.75rem', color: '#00bfa5', fontWeight: 700, marginBottom: '1rem', letterSpacing: '0.5px' }}>FEATURES</div>
-          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 900, letterSpacing: '-1px', marginBottom: '1rem' }}>
+          <div style={{ display: 'inline-block', background: isLight ? 'rgba(0,105,92,0.12)' : 'rgba(0,191,165,0.1)', border: `1px solid ${isLight ? 'rgba(0,105,92,0.3)' : 'rgba(0,191,165,0.2)'}`, borderRadius: '999px', padding: '0.35rem 1rem', fontSize: '0.75rem', color: isLight ? '#00695c' : '#00bfa5', fontWeight: 700, marginBottom: '1rem', letterSpacing: '0.5px' }}>FEATURES</div>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 900, letterSpacing: '-1px', marginBottom: '1rem', color: isLight ? '#0d2d26' : '#fff' }}>
             Everything your clinic<br />
-            <span style={{ background: 'linear-gradient(135deg,#00bfa5,#00e5cc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>needs in one place</span>
+            <span style={{ background: isLight ? 'linear-gradient(135deg,#00695c,#00897b)' : 'linear-gradient(135deg,#00bfa5,#00e5cc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>needs in one place</span>
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1rem', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>Built from the ground up for clinic management teams who need speed, clarity, and smart automation.</p>
+          <p style={{ color: isLight ? '#3d6b62' : 'rgba(255,255,255,0.4)', fontSize: '1rem', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>Built from the ground up for clinic management teams who need speed, clarity, and smart automation.</p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.25rem' }}>
-          {features.map((f, i) => <FeatureCard key={f.title} {...f} index={i} />)}
+          {features.map((f, i) => <FeatureCard key={f.title} {...f} index={i} isLight={isLight} />)}
         </div>
       </section>
 
       {/* ── How it works ── */}
-      <section id="how-it-works" style={{ position: 'relative', zIndex: 1, padding: '7rem 5%', background: 'rgba(255,255,255,0.015)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <section id="how-it-works" style={{ position: 'relative', zIndex: 1, padding: '7rem 5%', background: isLight ? 'linear-gradient(135deg, #004d40 0%, #00695c 50%, #00897b 100%)' : 'rgba(255,255,255,0.015)', borderTop: isLight ? 'none' : '1px solid rgba(255,255,255,0.06)', boxShadow: isLight ? '0 8px 40px rgba(0,77,64,0.25)' : 'none' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <div style={{ display: 'inline-block', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)', borderRadius: '999px', padding: '0.35rem 1rem', fontSize: '0.75rem', color: '#3b82f6', fontWeight: 700, marginBottom: '1rem' }}>HOW IT WORKS</div>
-            <h2 style={{ fontSize: 'clamp(1.8rem,4vw,2.8rem)', fontWeight: 900, letterSpacing: '-1px' }}>Up and running in minutes</h2>
+            <div style={{ display: 'inline-block', background: isLight ? 'rgba(255,255,255,0.15)' : 'rgba(59,130,246,0.1)', border: `1px solid ${isLight ? 'rgba(255,255,255,0.3)' : 'rgba(59,130,246,0.2)'}`, borderRadius: '999px', padding: '0.35rem 1rem', fontSize: '0.75rem', color: isLight ? '#b2ffed' : '#3b82f6', fontWeight: 700, marginBottom: '1rem' }}>HOW IT WORKS</div>
+            <h2 style={{ fontSize: 'clamp(1.8rem,4vw,2.8rem)', fontWeight: 900, letterSpacing: '-1px', color: isLight ? '#fff' : '#fff' }}>Up and running in minutes</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: '1.5rem' }}>
             {workflow.map((w, i) => (
               <div key={w.step} style={{ position: 'relative' }}>
                 {i < workflow.length - 1 && <div style={{ position: 'absolute', top: '1.5rem', left: 'calc(100% - 0.5rem)', width: '1rem', height: '1px', background: 'rgba(255,255,255,0.1)', display: 'none' }} />}
-                <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '16px', padding: '1.5rem' }}>
-                  <div style={{ fontSize: '2rem', fontWeight: 900, color: '#00bfa5', opacity: 0.5, marginBottom: '0.75rem' }}>{w.step}</div>
+                <div style={{ background: isLight ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.03)', border: `1px solid ${isLight ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.07)'}`, borderRadius: '16px', padding: '1.5rem', backdropFilter: 'blur(8px)' }}>
+                  <div style={{ fontSize: '2rem', fontWeight: 900, color: isLight ? '#b2ffed' : '#00bfa5', opacity: isLight ? 1 : 0.5, marginBottom: '0.75rem' }}>{w.step}</div>
                   <h3 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: '0.5rem', color: '#fff' }}>{w.title}</h3>
-                  <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.6 }}>{w.desc}</p>
+                  <p style={{ fontSize: '0.82rem', color: isLight ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.4)', lineHeight: 1.6 }}>{w.desc}</p>
                 </div>
               </div>
             ))}
@@ -511,7 +514,7 @@ export default function Landing() {
 
       {/* ── Testimonials ── */}
       <section id="testimonials" style={{ position: 'relative', zIndex: 1, padding: '7rem 5%', maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-        <div style={{ display: 'inline-block', background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)', borderRadius: '999px', padding: '0.4rem 1.25rem', fontSize: '0.75rem', color: '#a78bfa', fontWeight: 700, marginBottom: '3rem', letterSpacing: '0.5px' }}>TESTIMONIALS</div>
+        <div style={{ display: 'inline-block', background: isLight ? 'rgba(0,105,92,0.1)' : 'rgba(139,92,246,0.1)', border: `1px solid ${isLight ? 'rgba(0,105,92,0.25)' : 'rgba(139,92,246,0.25)'}`, borderRadius: '999px', padding: '0.4rem 1.25rem', fontSize: '0.75rem', color: isLight ? '#00695c' : '#a78bfa', fontWeight: 700, marginBottom: '3rem', letterSpacing: '0.5px' }}>TESTIMONIALS</div>
         
         <div style={{ position: 'relative', minHeight: '300px', display: 'flex', justifyContent: 'center' }}>
           {testimonials.map((t, i) => (
@@ -526,11 +529,11 @@ export default function Landing() {
             }}>
               
               <div style={{
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: isLight ? 'linear-gradient(135deg, rgba(0,105,92,0.06), rgba(0,137,123,0.04))' : 'rgba(255,255,255,0.02)',
+                border: `1px solid ${isLight ? 'rgba(0,105,92,0.18)' : 'rgba(255,255,255,0.08)'}`,
                 borderRadius: '24px',
                 padding: '3rem 2.5rem',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
+                boxShadow: isLight ? '0 20px 40px rgba(0,105,92,0.12), inset 0 1px 0 rgba(255,255,255,0.8)' : '0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
                 position: 'relative',
                 overflow: 'hidden'
               }}>
@@ -547,13 +550,13 @@ export default function Landing() {
                     </div>
                   </div>
                   
-                  <p style={{ fontSize: '1.25rem', color: '#fff', lineHeight: 1.8, fontStyle: 'italic', marginBottom: '2.5rem', fontWeight: 300 }}>"{t.text}"</p>
+                  <p style={{ fontSize: '1.25rem', color: isLight ? '#0d2d26' : '#fff', lineHeight: 1.8, fontStyle: 'italic', marginBottom: '2.5rem', fontWeight: 300 }}>"{t.text}"</p>
                   
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
                     <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'linear-gradient(135deg,#00bfa5,#0097a7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', border: '2px solid rgba(0,191,165,0.3)', boxShadow: '0 4px 12px rgba(0,191,165,0.2)' }}>{t.avatar}</div>
                     <div style={{ textAlign: 'left' }}>
-                      <div style={{ fontWeight: 700, fontSize: '1.05rem', color: '#fff', marginBottom: '0.2rem' }}>{t.name}</div>
-                      <div style={{ fontSize: '0.85rem', color: '#00bfa5', fontWeight: 500 }}>{t.role}</div>
+                      <div style={{ fontWeight: 700, fontSize: '1.05rem', color: isLight ? '#0d2d26' : '#fff', marginBottom: '0.2rem' }}>{t.name}</div>
+                      <div style={{ fontSize: '0.85rem', color: isLight ? '#00695c' : '#00bfa5', fontWeight: 500 }}>{t.role}</div>
                     </div>
                   </div>
                 </div>
@@ -571,11 +574,11 @@ export default function Landing() {
       </section>
 
       {/* ── Final CTA ── */}
-      <section style={{ position: 'relative', zIndex: 1, overflow: 'hidden', padding: '8rem 5% 7rem', textAlign: 'center' }}>
+      <section style={{ position: 'relative', zIndex: 1, overflow: 'hidden', padding: '8rem 5% 7rem', textAlign: 'center', background: isLight ? 'linear-gradient(135deg, #00695c 0%, #00897b 40%, #26a69a 100%)' : 'transparent' }}>
         {/* Layered glow backgrounds */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(6,9,18,0) 0%, rgba(0,191,165,0.06) 40%, rgba(59,130,246,0.05) 70%, rgba(6,9,18,0) 100%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', top: '-80px', left: '50%', transform: 'translateX(-50%)', width: '700px', height: '700px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,191,165,0.1) 0%, transparent 70%)', pointerEvents: 'none', filter: 'blur(20px)' }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,191,165,0.4), rgba(59,130,246,0.4), transparent)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: isLight ? 'transparent' : 'linear-gradient(180deg, rgba(6,9,18,0) 0%, rgba(0,191,165,0.06) 40%, rgba(59,130,246,0.05) 70%, rgba(6,9,18,0) 100%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '-80px', left: '50%', transform: 'translateX(-50%)', width: '700px', height: '700px', borderRadius: '50%', background: isLight ? 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(0,191,165,0.1) 0%, transparent 70%)', pointerEvents: 'none', filter: 'blur(20px)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: isLight ? 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)' : 'linear-gradient(90deg, transparent, rgba(0,191,165,0.4), rgba(59,130,246,0.4), transparent)' }} />
 
         {/* Floating orbs */}
         <div style={{ position: 'absolute', top: '20%', left: '8%', width: '120px', height: '120px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,191,165,0.15), transparent)', filter: 'blur(30px)', animation: 'float 8s ease-in-out infinite' }} />
@@ -591,15 +594,15 @@ export default function Landing() {
 
           {/* Headline */}
           <h2 style={{ fontSize: 'clamp(2.4rem, 6vw, 4rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-2px', marginBottom: '1.5rem' }}>
-            <span style={{ background: 'linear-gradient(135deg, #ffffff, rgba(255,255,255,0.8))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Ready to transform</span>
+            <span style={{ background: 'linear-gradient(135deg, #ffffff, rgba(255,255,255,0.85))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Ready to transform</span>
             <br />
-            <span style={{ background: 'linear-gradient(135deg, #00bfa5 0%, #00e5cc 50%, #0097a7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '200%', animation: 'shimmer 3s linear infinite', display: 'inline-block' }}>
+            <span style={{ background: isLight ? 'linear-gradient(135deg, #b2ffed 0%, #e0f7fa 50%, #ccf5f0 100%)' : 'linear-gradient(135deg, #00bfa5 0%, #00e5cc 50%, #0097a7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '200%', animation: 'shimmer 3s linear infinite', display: 'inline-block' }}>
               your clinic today?
             </span>
           </h2>
 
           {/* Subtext */}
-          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.1rem', lineHeight: 1.75, maxWidth: '560px', margin: '0 auto 1rem' }}>
+          <p style={{ color: isLight ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.5)', fontSize: '1.1rem', lineHeight: 1.75, maxWidth: '560px', margin: '0 auto 1rem' }}>
             Stop chasing missed appointments. Start delivering smarter patient care — automated, prioritized, and beautifully organized.
           </p>
 
@@ -611,8 +614,8 @@ export default function Landing() {
               { val: '50+', label: 'Doctors supported', color: '#8b5cf6' },
             ].map(s => (
               <div key={s.label} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.8rem', fontWeight: 900, color: s.color, letterSpacing: '-1px', lineHeight: 1 }}>{s.val}</div>
-                <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.38)', marginTop: '0.3rem', fontWeight: 500 }}>{s.label}</div>
+                <div style={{ fontSize: '1.8rem', fontWeight: 900, color: isLight ? '#b2ffed' : s.color, letterSpacing: '-1px', lineHeight: 1 }}>{s.val}</div>
+                <div style={{ fontSize: '0.72rem', color: isLight ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.38)', marginTop: '0.3rem', fontWeight: 500 }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -622,7 +625,7 @@ export default function Landing() {
             <Link to="/register" className="glow-btn" style={{ padding: '1.1rem 2.75rem', borderRadius: '16px', background: 'linear-gradient(135deg, #00bfa5, #0097a7)', color: '#fff', fontWeight: 800, fontSize: '1.05rem', textDecoration: 'none', boxShadow: '0 12px 40px rgba(0,191,165,0.5)', letterSpacing: '-0.3px', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.25s ease' }}>
               🚀 Start Free — No Card Needed
             </Link>
-            <Link to="/login" style={{ padding: '1.1rem 2.75rem', borderRadius: '16px', background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.85)', fontWeight: 600, fontSize: '1.05rem', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)', transition: 'all 0.25s ease' }}>
+            <Link to="/login" style={{ padding: '1.1rem 2.75rem', borderRadius: '16px', background: isLight ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.05)', color: isLight ? '#fff' : 'rgba(255,255,255,0.85)', fontWeight: 600, fontSize: '1.05rem', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.3)', backdropFilter: 'blur(10px)', transition: 'all 0.25s ease' }}>
               Sign In to Dashboard →
             </Link>
           </div>
@@ -630,7 +633,7 @@ export default function Landing() {
           {/* Trust badges */}
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
             {['🔒 HTTPS Secured', '✅ No credit card', '⚡ 2-min setup', '🆓 Free forever plan'].map(b => (
-              <div key={b} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)', fontWeight: 500 }}>{b}</div>
+              <div key={b} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', color: isLight ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.35)', fontWeight: 500 }}>{b}</div>
             ))}
           </div>
 
@@ -645,7 +648,7 @@ export default function Landing() {
               <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#fff' }}>Join 500+ healthcare professionals</div>
               <div style={{ display: 'flex', gap: '2px', marginTop: '2px' }}>
                 {[1,2,3,4,5].map(s => <span key={s} style={{ color: '#fbbf24', fontSize: '0.8rem' }}>★</span>)}
-                <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.38)', marginLeft: '4px' }}>4.9/5 rating</span>
+                <span style={{ fontSize: '0.72rem', color: isLight ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.38)', marginLeft: '4px' }}>4.9/5 rating</span>
               </div>
             </div>
           </div>
@@ -653,7 +656,7 @@ export default function Landing() {
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ position: 'relative', zIndex: 1, background: 'rgba(4,7,15,0.95)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <footer style={{ position: 'relative', zIndex: 1, background: isLight ? '#003d33' : 'rgba(4,7,15,0.95)', borderTop: `1px solid ${isLight ? 'rgba(0,191,165,0.2)' : 'rgba(255,255,255,0.06)'}` }}>
         {/* Top footer */}
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 5% 3rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2.5rem' }}>
           {/* Brand */}
